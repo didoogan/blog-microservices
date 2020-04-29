@@ -46,13 +46,13 @@ app.post('/events', async (req, res) => {
       return comment.id === id;
     });
     comment.status = status;
-
+    console.log('Comment moderated with status: ', status);
     await axios.post('http://event-bus-srv:4005/events', {
-      type: 'commentupdated',
+      type: 'CommentUpdated',
       data: {
         id,
         status,
-        postid,
+        postId,
         content,
       },
     });

@@ -11,12 +11,13 @@ const posts = {};
 
 const handleEvent = (type, data) => {
     console.log('inside handleEvent');
+    console.log(`type, data : ${type}, ${Object.keys(data)}, ${Object.values(data)}`);
     if (type === 'PostCreated') {
         const {id, title} = data;
         posts[id] = {id, title, comments: []};
     }
 
-    if (type === 'CommentCreated') {
+    if (type === 'CommentUpdated') {
         const {id, content, postId, status} = data;
         const post = posts[postId];
         post.comments.push({id, content, status});
@@ -40,6 +41,7 @@ app.get('/posts', (req, res) => {
 
 app.post('/events', (req, res) => {
     let {type, data} = req.body;
+    console.log(`type, data :${type}, ${data}`);
     handleEvent(type, data);
     res.send({});
 });
